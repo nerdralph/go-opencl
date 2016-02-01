@@ -20,6 +20,7 @@ package cl
 // #cgo CFLAGS: -Iheaders/1.2 -Wno-ignored-attributes
 // #cgo darwin LDFLAGS: -framework OpenCL
 // #cgo linux LDFLAGS: -lOpenCL
+// #cgo windows LDFLAGS: -lOpenCL
 import "C"
 import "errors"
 
