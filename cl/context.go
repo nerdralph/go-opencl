@@ -65,6 +65,14 @@ func CreateContext(devices []*Device) (*Context, error) {
 	return context, nil
 }
 
+func CreateContextFromType(deviceType DeviceType) (*Context, error) {
+	devices, err := GetAllDevices(deviceType)
+	if err != nil {
+		return nil, err
+	}
+	return CreateContext(devices)
+}
+
 func (ctx *Context) GetSupportedImageFormats(flags MemFlag, imageType MemObjectType) ([]ImageFormat, error) {
 	var formats [maxImageFormats]C.cl_image_format
 	var nFormats C.cl_uint
@@ -113,6 +121,23 @@ func (ctx *Context) CreateProgramWithSource(sources []string) (*Program, error) 
 	program := &Program{clProgram: clProgram, devices: ctx.devices}
 	runtime.SetFinalizer(program, releaseProgram)
 	return program, nil
+}
+
+// Convenience function combining CreateProgramWithSource, BuildProgram,
+// and CreateKernel
+func (ctx *Context) CreateKernelWithSource(sources []string, options string, name string) (*Kernel, error) {
+	program, err := ctx.CreateProgramWithSource(sources)
+	if err != nil {
+		return nil, err
+	}
+
+	err = program.BuildProgram(nil, options)
+	if err != nil {
+		program.Release()
+		return nil, err
+	}
+
+    return program.CreateKernel(name)
 }
 
 func (ctx *Context) CreateBufferUnsafe(flags MemFlag, size int, dataPtr unsafe.Pointer) (*MemObject, error) {
