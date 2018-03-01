@@ -238,7 +238,6 @@ const (
 	// This flag specifies that the region being mapped in the memory object is being mapped for reading.
 	MapFlagRead                  MapFlag = C.CL_MAP_READ
 	MapFlagWrite                 MapFlag = C.CL_MAP_WRITE
-	MapFlagWriteInvalidateRegion MapFlag = C.CL_MAP_WRITE_INVALIDATE_REGION
 )
 
 func (mf MapFlag) toCl() C.cl_map_flags {
