@@ -1,5 +1,3 @@
-// +build cl12
-
 package cl
 
 // #ifdef __APPLE__

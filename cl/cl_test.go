@@ -191,9 +191,7 @@ func TestHello(t *testing.T) {
 	}
 	for i := 0; i < 3; i++ {
 		name, err := kernel.ArgName(i)
-		if err == ErrUnsupported {
-			break
-		} else if err != nil {
+		if err != nil {
 			t.Errorf("GetKernelArgInfo for name failed: %+v", err)
 			break
 		} else {
