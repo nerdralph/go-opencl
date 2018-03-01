@@ -115,6 +115,24 @@ func GetDevices(platform *Platform, deviceType DeviceType) ([]*Device, error) {
 	return devices, nil
 }
 
+// Obtain the list of devices available on all platforms.
+func GetAllDevices(deviceType DeviceType) ([]*Device, error) {
+	platforms, err := GetPlatforms()
+	if err != nil {
+		return nil, err
+	}
+
+	all := []*Device{}
+	for _, platform := range platforms {
+		devices, err := GetDevices(platform, deviceType)
+		if err != nil {
+			return nil, err
+		}
+		all = append(all, devices...)
+	}
+	return all, err
+}
+
 func (d *Device) nullableId() C.cl_device_id {
 	if d == nil {
 		return nil
