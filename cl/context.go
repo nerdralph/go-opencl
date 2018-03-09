@@ -17,7 +17,7 @@ const maxImageFormats = 256
 
 type Context struct {
 	clContext C.cl_context
-	devices   []*Device
+	Devices   []*Device
 }
 
 type MemObject struct {
@@ -60,7 +60,7 @@ func CreateContext(devices []*Device) (*Context, error) {
 	if clContext == nil {
 		return nil, ErrUnknown
 	}
-	context := &Context{clContext: clContext, devices: devices}
+	context := &Context{clContext: clContext, Devices: devices}
 	runtime.SetFinalizer(context, releaseContext)
 	return context, nil
 }
@@ -118,7 +118,7 @@ func (ctx *Context) CreateProgramWithSource(sources []string) (*Program, error) 
 	if clProgram == nil {
 		return nil, ErrUnknown
 	}
-	program := &Program{clProgram: clProgram, devices: ctx.devices}
+	program := &Program{clProgram: clProgram, devices: ctx.Devices}
 	runtime.SetFinalizer(program, releaseProgram)
 	return program, nil
 }
