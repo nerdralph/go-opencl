@@ -1,7 +1,7 @@
 OpenCL bindings for Go
 ======================
 
-This fork improves on <http://github.com/samuel/go-opencl/cl>.  Improvements include:
+This fork improves on <http://github.com/samuel/go-opencl/>.  Improvements include:
 - GetAllDevices
 - CreateContextFromType
 - CreateKernelWithSource
